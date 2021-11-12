@@ -79,7 +79,7 @@
 
          <v-flex md6 v-if="!formAgregar">
           <v-card class="pa-3">
-            <v-form @submit.prevent="agregarTarea">
+            <v-form @submit.prevent="editarTarea">
               <v-text-field label="Titulo de tarea" v-model="titulo">
               </v-text-field>
               <v-textarea v-model="description"
@@ -87,7 +87,7 @@
               name="input-7-4"
               label="Escribe una descripción"
             ></v-textarea>
-            <v-btn block color="warning" type="submit" @keyup.enter="agregarTarea">Editar tarea <v-icon class="ml-2">fas fa-edit</v-icon></v-btn>
+            <v-btn block color="warning" type="submit" @keyup.enter="editarTarea">Editar tarea <v-icon class="ml-2">fas fa-edit</v-icon></v-btn>
             </v-form>
            </v-card>
          
@@ -165,7 +165,8 @@
         snackbar: false,
         mensaje: 'Llena todos los campos',
         formAgregar: true,
-        complet: false
+        complet: false,
+        indexTarea: ''
       }
     },
     methods:{
@@ -200,6 +201,14 @@
         this.description = this.listaTareas[index].description
         this.snackbar = true 
         this.mensaje = 'Tarea Editada!'
+        this.indexTarea = index
+      },
+      editarTarea(){
+        this.listaTareas[this.indexTarea].titulo = this.titulo
+        this.listaTareas[this.indexTarea].description = this.description
+         this.formAgregar = true
+         this.titulo = '',
+         this.description = ''
       },
       finalizada(index){
         this.complet = true
